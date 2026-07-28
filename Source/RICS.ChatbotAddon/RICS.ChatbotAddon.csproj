@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>CAP_RICS_ChatbotAddon</RootNamespace>
+    <AssemblyName>CAP_RICS_ChatbotAddon</AssemblyName>
+    <LangVersion>10</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\..\1.6\Assemblies\</OutputPath>
+    <DebugType>portable</DebugType>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4850" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- RICS + Newtonsoft from DEV mod (provided at runtime by RICS; do not copy). -->
+  <ItemGroup>
+    <Reference Include="CAP_Chat_Interactive">
+      <HintPath>..\..\..\[CAP] Chat Interactive\1.6\Assemblies\[CAP] Chat Interactive.dll</HintPath>
+      <Private>false</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\[CAP] Chat Interactive\1.6\Assemblies\Newtonsoft.Json.dll</HintPath>
+      <Private>false</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Update="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Update="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Update="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Update="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Update="System.Xml.Linq">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuildCleanup" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <_ExtraDlls Include="$(OutputPath)*.dll" Exclude="$(OutputPath)CAP_RICS_ChatbotAddon.dll" />
+      <_ExtraConfigs Include="$(OutputPath)*.dll.config" />
+    </ItemGroup>
+    <Delete Files="@(_ExtraDlls);@(_ExtraConfigs)" ContinueOnError="true" />
+  </Target>
+
+</Project>

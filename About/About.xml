@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) Captolamia. All rights reserved.
+Licensed under the AGPLv3 License. See LICENSE file in the project root for full license information.
+-->
+<ModMetaData>
+  <name>[CAP] RICS addon for Chat bots</name>
+  <author>Captolamia</author>
+  <packageId>Captolamia.RICS.ChatbotAddon</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>
+    Optional addon for [CAP] Rimworld Interactive Chat Service (RICS).
+
+    Adds moderator-level bot-only commands that return structured gamestate data
+    for an external AI chatbot (e.g. Masie). Responses are intended for the RICS
+    AI command path (file/HTTP) — not for public viewer chat.
+
+    Commands: !botstate, !botpawns, !botthreats, !botmap, !botwealth, !botresources
+
+    Requires RICS. Load after RICS.
+    DEV/Beta packageId: Captolamia.RICS.Beta | Release: Captolamia.RICS
+
+    GitHub: https://github.com/ekudram/cap-RICS-Chatbot-Addon
+    License: AGPLv3
+  </description>
+  <modDependencies>
+    <li>
+      <packageId>Captolamia.RICS</packageId>
+      <displayName>[CAP] Rimworld Interactive Chat Service</displayName>
+      <downloadUrl>https://github.com/ekudram/-cap-RimworldInteractiveChatServices</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>Captolamia.RICS</li>
+    <li>Captolamia.RICS.Beta</li>
+  </loadAfter>
+</ModMetaData>

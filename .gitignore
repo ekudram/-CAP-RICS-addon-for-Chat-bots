@@ -1,0 +1,24 @@
+# Build
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Local secrets / IDE
+*.DotSettings.user
+appsettings.*.local.json
+
+# Keep 1.6/Assemblies/*.dll for distribution; ignore accidental dep copies
+1.6/Assemblies/0Harmony.dll
+1.6/Assemblies/Newtonsoft.Json.dll
+1.6/Assemblies/[CAP] Chat Interactive.dll
+1.6/Assemblies/*.dll.config
+1.6/Assemblies/*.pdb

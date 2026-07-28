@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Bot-only gamestate commands for RICS AI chatbot (Masie).
+  Moderator permission keeps viewers from invoking them.
+  excludeFromPricelist keeps them off the public RICS Pricelist site.
+-->
+<Defs>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotState</defName>
+    <commandText>botstate</commandText>
+    <label>bot state</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotStateCommand</commandClass>
+    <commandDescription>AI bot only. Full colony gamestate snapshot as JSON (day, colonists, threat, food, medicine, weather, storyteller).</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotPawns</defName>
+    <commandText>botpawns</commandText>
+    <label>bot pawns</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotPawnsCommand</commandClass>
+    <commandDescription>AI bot only. JSON list of free colonists (name, skills, health, mood, job).</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotThreats</defName>
+    <commandText>botthreats</commandText>
+    <label>bot threats</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotThreatsCommand</commandClass>
+    <commandDescription>AI bot only. JSON summary of hostiles, manhunters, and fires on the home map.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotMap</defName>
+    <commandText>botmap</commandText>
+    <label>bot map</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotMapCommand</commandClass>
+    <commandDescription>AI bot only. JSON map info (name, biome, temperature, weather, season).</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotWealth</defName>
+    <commandText>botwealth</commandText>
+    <label>bot wealth</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotWealthCommand</commandClass>
+    <commandDescription>AI bot only. JSON wealth breakdown (total, items, buildings, pawns) and threat points.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotResources</defName>
+    <commandText>botresources</commandText>
+    <label>bot resources</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotResourcesCommand</commandClass>
+    <commandDescription>AI bot only. JSON stockpile counts (meals, medicine, materials, components).</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+</Defs>
