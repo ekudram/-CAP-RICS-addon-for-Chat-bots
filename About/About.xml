@@ -25,13 +25,13 @@ Licensed under the AGPLv3 License. See LICENSE file in the project root for full
     GitHub: https://github.com/ekudram/cap-RICS-Chatbot-Addon
     License: AGPLv3
   </description>
-  <modDependencies>
+  <!--<modDependencies>
     <li>
       <packageId>Captolamia.RICS</packageId>
       <displayName>[CAP] Rimworld Interactive Chat Service</displayName>
       <downloadUrl>https://github.com/ekudram/-cap-RimworldInteractiveChatServices</downloadUrl>
     </li>
-  </modDependencies>
+  </modDependencies>-->
   <loadAfter>
     <li>Captolamia.RICS</li>
     <li>Captolamia.RICS.Beta</li>
