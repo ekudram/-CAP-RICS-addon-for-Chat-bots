@@ -1,13 +1,14 @@
 // BotThreatsHandler.cs
 // Copyright (c) Captolamia
 // Licensed under AGPLv3 — see LICENSE.txt
+//
+// Live threat check for the AI bot: hostile faction members (not prisoners/slaves),
+// manhunter animals, and scaria animals. One pawn once — flags may stack.
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using Verse;
-using Verse.AI;
 
 namespace CAP_RICS_ChatbotAddon.Handlers
 {
@@ -21,47 +22,43 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                 if (map == null)
                     return BotMapHelper.ErrorNoMapJson();
 
-                var hostiles = new List<BotHostileEntry>();
+                var threats = new List<BotHostileEntry>();
+                var seen = new HashSet<int>();
+                int hostileFactionCount = 0;
                 int manhunterCount = 0;
+                int scariaCount = 0;
                 int fireCount = 0;
 
-                // Prefer hostile-to-colony cache; fall back to faction hostility scan
                 try
                 {
-                    HashSet<IAttackTarget> danger = map.attackTargetsCache?.TargetsHostileToColony;
-                    if (danger != null)
+                    var spawned = map.mapPawns?.AllPawnsSpawned;
+                    if (spawned != null)
                     {
-                        foreach (IAttackTarget t in danger)
+                        foreach (var p in spawned)
                         {
-                            Thing thing = t?.Thing;
-                            if (thing == null || thing.Destroyed) continue;
-                            if (!(thing is Pawn p) || p.Dead) continue;
-                            AddHostile(p, hostiles, ref manhunterCount);
-                        }
-                    }
-                }
-                catch
-                {
-                    // ignore cache failures
-                }
+                            if (p == null || p.Dead || p.Destroyed) continue;
+                            if (!seen.Add(p.thingIDNumber)) continue;
 
-                if (hostiles.Count == 0)
-                {
-                    try
-                    {
-                        foreach (var p in map.mapPawns?.AllPawnsSpawned ?? Enumerable.Empty<Pawn>())
-                        {
-                            if (p == null || p.Dead) continue;
+                            // Captured / enslaved by the colony are not an active field threat
+                            if (p.IsPrisonerOfColony || p.IsSlaveOfColony) continue;
+                            if (p.Faction != null && p.Faction.IsPlayer) continue;
 
+                            bool hostileFaction = IsHostileFactionMember(p);
                             bool manhunter = IsManhunter(p);
-                            bool factionHostile = p.Faction != null && p.Faction.HostileTo(Faction.OfPlayer);
-                            if (!manhunter && !factionHostile) continue;
+                            bool scaria = HasScaria(p);
 
-                            AddHostile(p, hostiles, ref manhunterCount);
+                            if (!hostileFaction && !manhunter && !scaria)
+                                continue;
+
+                            if (hostileFaction) hostileFactionCount++;
+                            if (manhunter) manhunterCount++;
+                            if (scaria) scariaCount++;
+
+                            threats.Add(BuildEntry(p, hostileFaction, manhunter, scaria));
                         }
                     }
-                    catch { /* ignore */ }
                 }
+                catch { /* ignore scan errors */ }
 
                 try
                 {
@@ -73,11 +70,14 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                 {
                     status = "ok",
                     command = "botthreats",
+                    threatActive = threats.Count > 0,
                     threatPoints = StorytellerUtility.DefaultThreatPointsNow(map),
-                    hostileCount = hostiles.Count,
+                    hostileCount = threats.Count,
+                    hostileFactionCount = hostileFactionCount,
                     manhunterCount = manhunterCount,
+                    scariaCount = scariaCount,
                     fireCount = fireCount,
-                    hostiles = hostiles
+                    hostiles = threats
                 };
 
                 return BotJson.Serialize(payload);
@@ -88,31 +88,105 @@ namespace CAP_RICS_ChatbotAddon.Handlers
             }
         }
 
-        private static void AddHostile(Pawn p, List<BotHostileEntry> hostiles, ref int manhunterCount)
+        private static BotHostileEntry BuildEntry(Pawn p, bool hostileFaction, bool manhunter, bool scaria)
         {
-            bool manhunter = IsManhunter(p);
-            if (manhunter)
-                manhunterCount++;
-
-            hostiles.Add(new BotHostileEntry
+            return new BotHostileEntry
             {
                 name = p.LabelShortCap,
-                kind = p.kindDef?.defName,
+                kind = p.kindDef?.label ?? p.kindDef?.defName ?? p.def?.label,
+                defName = p.def?.defName,
                 faction = p.Faction?.Name,
+                hostileFaction = hostileFaction,
                 manhunter = manhunter,
+                scaria = scaria,
                 downed = p.Downed,
+                animal = p.RaceProps?.Animal == true,
+                mechanoid = p.RaceProps?.IsMechanoid == true,
                 healthPct = p.health?.summaryHealth != null
                     ? Math.Round(p.health.summaryHealth.SummaryHealthPercent * 100.0, 1)
                     : 100.0
-            });
+            };
         }
 
+        private static bool IsHostileFactionMember(Pawn p)
+        {
+            try
+            {
+                if (p.Faction == null || p.Faction.IsPlayer)
+                    return false;
+                if (p.IsPrisoner || p.IsSlave)
+                    return false;
+                return p.Faction.HostileTo(Faction.OfPlayer) || p.HostileTo(Faction.OfPlayer);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>Mental state and optional manhunter hediff. Scaria is a separate flag.</summary>
         private static bool IsManhunter(Pawn p)
         {
-            if (p?.MentalStateDef == null) return false;
-            string defName = p.MentalStateDef.defName ?? "";
-            return p.MentalStateDef == MentalStateDefOf.Manhunter
-                   || defName.IndexOf("Manhunter", StringComparison.OrdinalIgnoreCase) >= 0;
+            try
+            {
+                if (p.InMentalState && p.MentalStateDef != null)
+                {
+                    if (p.MentalStateDef == MentalStateDefOf.Manhunter)
+                        return true;
+                    if (p.MentalStateDef == MentalStateDefOf.ManhunterPermanent)
+                        return true;
+                    string n = p.MentalStateDef.defName ?? "";
+                    if (n.IndexOf("Manhunter", StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                }
+
+                return HasHediffNamed(p, "Manhunter");
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static bool HasScaria(Pawn p)
+        {
+            try
+            {
+                var hs = p.health?.hediffSet;
+                if (hs == null) return false;
+
+                if (HediffDefOf.Scaria != null && hs.HasHediff(HediffDefOf.Scaria))
+                    return true;
+                if (HediffDefOf.ScariaInfection != null && hs.HasHediff(HediffDefOf.ScariaInfection))
+                    return true;
+
+                return HasHediffNamed(p, "Scaria");
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static bool HasHediffNamed(Pawn p, string token)
+        {
+            try
+            {
+                var list = p.health?.hediffSet?.hediffs;
+                if (list == null) return false;
+                foreach (var h in list)
+                {
+                    if (h?.def == null) continue;
+                    string dn = h.def.defName ?? "";
+                    string lb = h.def.label ?? "";
+                    if (dn.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                    if (lb.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                }
+            }
+            catch { }
+            return false;
         }
     }
 
@@ -120,9 +194,12 @@ namespace CAP_RICS_ChatbotAddon.Handlers
     {
         public string status;
         public string command;
+        public bool threatActive;
         public float threatPoints;
         public int hostileCount;
+        public int hostileFactionCount;
         public int manhunterCount;
+        public int scariaCount;
         public int fireCount;
         public List<BotHostileEntry> hostiles;
     }
@@ -131,9 +208,14 @@ namespace CAP_RICS_ChatbotAddon.Handlers
     {
         public string name;
         public string kind;
+        public string defName;
         public string faction;
+        public bool hostileFaction;
         public bool manhunter;
+        public bool scaria;
         public bool downed;
+        public bool animal;
+        public bool mechanoid;
         public double healthPct;
     }
 }

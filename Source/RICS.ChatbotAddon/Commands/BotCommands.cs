@@ -27,7 +27,7 @@ namespace CAP_RICS_ChatbotAddon.Commands
     public class BotThreatsCommand : ChatCommand
     {
         public override string Name => "botthreats";
-        public override string Description => "AI bot hostiles / threats summary (JSON).";
+        public override string Description => "AI bot live threat check: hostiles, manhunters, scaria (JSON).";
         public override string Execute(ChatMessageWrapper user, string[] args) => BotThreatsHandler.Build();
     }
 
@@ -50,5 +50,12 @@ namespace CAP_RICS_ChatbotAddon.Commands
         public override string Name => "botresources";
         public override string Description => "AI bot stockpile / resources (JSON).";
         public override string Execute(ChatMessageWrapper user, string[] args) => BotResourcesHandler.Build();
+    }
+
+    public class BotGearCommand : ChatCommand
+    {
+        public override string Name => "botgear";
+        public override string Description => "AI bot assigned-pawn full gear / inventory / sidearms (JSON).";
+        public override string Execute(ChatMessageWrapper user, string[] args) => BotGearHandler.Build(user);
     }
 }

@@ -38,7 +38,7 @@
     <label>bot threats</label>
     <enabled>true</enabled>
     <commandClass>CAP_RICS_ChatbotAddon.Commands.BotThreatsCommand</commandClass>
-    <commandDescription>AI bot only. JSON summary of hostiles, manhunters, and fires on the home map.</commandDescription>
+    <commandDescription>AI bot only. JSON live threat check: hostile faction members (not prisoners/slaves), manhunter animals, scaria animals (deduped). Use to see if a raid or pack is still active.</commandDescription>
     <permissionLevel>moderator</permissionLevel>
     <excludeFromPricelist>true</excludeFromPricelist>
     <cooldownSeconds>0</cooldownSeconds>
@@ -78,6 +78,19 @@
     <enabled>true</enabled>
     <commandClass>CAP_RICS_ChatbotAddon.Commands.BotResourcesCommand</commandClass>
     <commandDescription>AI bot only. JSON stockpile counts (meals, medicine, materials, components).</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotGear</defName>
+    <commandText>botgear</commandText>
+    <label>bot gear</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotGearCommand</commandClass>
+    <commandDescription>AI bot only. JSON full loadout of the bot's assigned pawn (equipment, sidearms, all inventory, apparel). Not for viewers.</commandDescription>
     <permissionLevel>moderator</permissionLevel>
     <excludeFromPricelist>true</excludeFromPricelist>
     <cooldownSeconds>0</cooldownSeconds>

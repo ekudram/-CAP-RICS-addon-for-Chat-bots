@@ -25,10 +25,11 @@ This addon does **not** ship Harmony, Newtonsoft, or RICS DLLs. RICS provides sh
 |---------|-------------|
 | `!botstate` | Colony snapshot (day, colonists, threat, food/med status, weather, storyteller) |
 | `!botpawns` | Free colonists (name, gender, age, skills, health/mood, job) |
-| `!botthreats` | Hostiles, manhunters, fire count summary |
+| `!botthreats` | Live threat check: hostile faction members (not prisoners/slaves), manhunters, scaria animals (one pawn, stacked flags), fires |
 | `!botmap` | Map name, biome, temp, weather, season |
 | `!botwealth` | Wealth total + items/buildings/pawns |
 | `!botresources` | Stockpile counts (meals, meds, materials, components) |
+| `!botgear` | Assigned pawn full loadout (equipment, sidearms, **all** inventory, apparel) plus a generic `weapons[]` list. Bot-only — not `!mypawn gear`. |
 
 All use `permissionLevel` = **moderator** and `excludeFromPricelist` = **true** (hidden from the public RICS Pricelist site when RICS exports settings with that flag).
 
