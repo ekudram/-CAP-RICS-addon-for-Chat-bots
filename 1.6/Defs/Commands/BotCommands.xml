@@ -97,4 +97,17 @@
     <useCommandCooldown>false</useCommandCooldown>
   </CAP_ChatInteractive.ChatCommandDef>
 
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotFaction</defName>
+    <commandText>botfaction</commandText>
+    <label>bot faction</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotFactionCommand</commandClass>
+    <commandDescription>AI bot only. JSON faction details (name, common race, relation, vanilla type, Ideology major memes if DLC). Usage: !botfaction [name]. Empty = list.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
 </Defs>

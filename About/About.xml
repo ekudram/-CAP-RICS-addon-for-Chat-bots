@@ -17,7 +17,7 @@ Licensed under the AGPLv3 License. See LICENSE file in the project root for full
     for an external AI chatbot (e.g. Masie). Responses are intended for the RICS
     AI command path (file/HTTP) — not for public viewer chat.
 
-    Commands: !botstate, !botpawns, !botthreats, !botmap, !botwealth, !botresources, !botgear
+    Commands: !botstate, !botpawns, !botthreats, !botmap, !botwealth, !botresources, !botgear, !botfaction
 
     Requires RICS. Load after RICS.
     DEV/Beta packageId: Captolamia.RICS.Beta | Release: Captolamia.RICS

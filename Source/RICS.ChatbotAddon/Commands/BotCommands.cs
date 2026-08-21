@@ -58,4 +58,11 @@ namespace CAP_RICS_ChatbotAddon.Commands
         public override string Description => "AI bot assigned-pawn full gear / inventory / sidearms (JSON).";
         public override string Execute(ChatMessageWrapper user, string[] args) => BotGearHandler.Build(user);
     }
+
+    public class BotFactionCommand : ChatCommand
+    {
+        public override string Name => "botfaction";
+        public override string Description => "AI bot faction details: race, relation, vanilla type, Ideology memes (JSON).";
+        public override string Execute(ChatMessageWrapper user, string[] args) => BotFactionHandler.Build(args);
+    }
 }
