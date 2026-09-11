@@ -30,6 +30,8 @@ This addon does **not** ship Harmony, Newtonsoft, or RICS DLLs. RICS provides sh
 | `!botwealth` | Wealth total + items/buildings/pawns |
 | `!botresources` | Stockpile counts (meals, meds, materials, components) |
 | `!botgear` | Assigned pawn full loadout (equipment, sidearms, **all** inventory, apparel) plus a generic `weapons[]` list. Bot-only — not `!mypawn gear`. |
+| `!botowned` | RICS-owned weapons/apparel **anywhere** (on pawn, chests, map, caravan). JSON includes `id`, `quality`, `hpPct` (condition), `where`. Requires RICS pawn ownership on. |
+| `!botdisown` | Unclaim one owned item: `!botdisown <thingId\|label>`. Prefer `id` from `!botowned`. |
 
 All use `permissionLevel` = **moderator** and `excludeFromPricelist` = **true** (hidden from the public RICS Pricelist site when RICS exports settings with that flag).
 

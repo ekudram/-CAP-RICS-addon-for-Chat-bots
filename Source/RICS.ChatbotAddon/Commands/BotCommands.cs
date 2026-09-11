@@ -65,4 +65,18 @@ namespace CAP_RICS_ChatbotAddon.Commands
         public override string Description => "AI bot faction details: race, relation, vanilla type, Ideology memes (JSON).";
         public override string Execute(ChatMessageWrapper user, string[] args) => BotFactionHandler.Build(args);
     }
+
+    public class BotOwnedCommand : ChatCommand
+    {
+        public override string Name => "botowned";
+        public override string Description => "AI bot RICS-owned weapons/apparel anywhere (JSON, quality + condition).";
+        public override string Execute(ChatMessageWrapper user, string[] args) => BotOwnedHandler.Build(user);
+    }
+
+    public class BotDisownCommand : ChatCommand
+    {
+        public override string Name => "botdisown";
+        public override string Description => "AI bot unclaim one RICS-owned item by thingId or label (JSON).";
+        public override string Execute(ChatMessageWrapper user, string[] args) => BotDisownHandler.Build(user, args);
+    }
 }

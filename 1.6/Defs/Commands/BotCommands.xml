@@ -110,4 +110,30 @@
     <useCommandCooldown>false</useCommandCooldown>
   </CAP_ChatInteractive.ChatCommandDef>
 
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotOwned</defName>
+    <commandText>botowned</commandText>
+    <label>bot owned</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotOwnedCommand</commandClass>
+    <commandDescription>AI bot only. JSON list of RICS-owned weapons and apparel for the assigned pawn (equipped, worn, inventory, chests, map, caravan). Includes quality and condition (hpPct). Not !mypawn owned.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotDisown</defName>
+    <commandText>botdisown</commandText>
+    <label>bot disown</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotDisownCommand</commandClass>
+    <commandDescription>AI bot only. Unclaim one RICS-owned item. Usage: !botdisown &lt;thingId|label&gt;. Prefer thingId from !botowned. JSON result with quality and condition of the cleared item.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
 </Defs>
