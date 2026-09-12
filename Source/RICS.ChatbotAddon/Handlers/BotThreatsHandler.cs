@@ -18,16 +18,18 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         {
             try
             {
-                Map map = BotMapHelper.GetPlayerMap();
+                Map map = BotMapHelper.GetCombatMap();
                 if (map == null)
                     return BotMapHelper.ErrorNoMapJson();
 
                 var threats = new List<BotHostileEntry>();
                 var seen = new HashSet<int>();
+                var kindCounts = new Dictionary<string, int>(System.StringComparer.OrdinalIgnoreCase);
                 int hostileFactionCount = 0;
                 int manhunterCount = 0;
                 int scariaCount = 0;
                 int fireCount = 0;
+                int downedHostileCount = 0;
 
                 try
                 {
@@ -53,6 +55,12 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                             if (hostileFaction) hostileFactionCount++;
                             if (manhunter) manhunterCount++;
                             if (scaria) scariaCount++;
+                            if (p.Downed) downedHostileCount++;
+
+                            string kindLabel = p.kindDef?.label ?? p.kindDef?.defName ?? p.def?.label ?? "hostile";
+                            if (!kindCounts.ContainsKey(kindLabel))
+                                kindCounts[kindLabel] = 0;
+                            kindCounts[kindLabel]++;
 
                             threats.Add(BuildEntry(p, hostileFaction, manhunter, scaria));
                         }
@@ -66,6 +74,23 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                 }
                 catch { /* ignore */ }
 
+                const int hostilesCap = 12;
+                List<BotHostileEntry> hostilesOut = threats;
+                if (threats.Count > 20)
+                {
+                    hostilesOut = new List<BotHostileEntry>(hostilesCap);
+                    foreach (var e in threats)
+                    {
+                        if (e == null || e.downed) continue;
+                        hostilesOut.Add(e);
+                        if (hostilesOut.Count >= hostilesCap) break;
+                    }
+                }
+                else if (threats.Count > hostilesCap)
+                {
+                    hostilesOut = threats.GetRange(0, hostilesCap);
+                }
+
                 var payload = new BotThreatsPayload
                 {
                     status = "ok",
@@ -77,7 +102,12 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                     manhunterCount = manhunterCount,
                     scariaCount = scariaCount,
                     fireCount = fireCount,
-                    hostiles = threats
+                    downedHostileCount = downedHostileCount,
+                    mapName = map.Parent?.Label ?? map.ToString(),
+                    isPlayerHome = map.IsPlayerHome,
+                    playerIsAggressor = BotMapHelper.PlayerIsAggressorOn(map),
+                    kindCounts = kindCounts,
+                    hostiles = hostilesOut
                 };
 
                 return BotJson.Serialize(payload);
@@ -201,6 +231,11 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         public int manhunterCount;
         public int scariaCount;
         public int fireCount;
+        public int downedHostileCount;
+        public string mapName;
+        public bool isPlayerHome;
+        public bool playerIsAggressor;
+        public Dictionary<string, int> kindCounts;
         public List<BotHostileEntry> hostiles;
     }
 

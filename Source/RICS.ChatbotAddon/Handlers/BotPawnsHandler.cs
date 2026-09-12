@@ -16,7 +16,7 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         {
             try
             {
-                Map map = BotMapHelper.GetPlayerMap();
+                Map map = BotMapHelper.GetCombatMap() ?? BotMapHelper.GetPlayerMap();
                 if (map == null)
                     return BotMapHelper.ErrorNoMapJson();
 
