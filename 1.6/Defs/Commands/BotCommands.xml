@@ -33,6 +33,19 @@
   </CAP_ChatInteractive.ChatCommandDef>
 
   <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotPawnCheck</defName>
+    <commandText>botpawncheck</commandText>
+    <label>bot pawn check</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotPawnCheckCommand</commandClass>
+    <commandDescription>AI bot only. JSON hediffs with bleeding/tended/scar/missing flags and advice (rest vs healer serum). Usage: !botpawncheck [name]. Empty = bot's pawn.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
     <defName>BotThreats</defName>
     <commandText>botthreats</commandText>
     <label>bot threats</label>

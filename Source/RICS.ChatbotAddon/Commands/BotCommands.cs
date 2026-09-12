@@ -24,6 +24,13 @@ namespace CAP_RICS_ChatbotAddon.Commands
         public override string Execute(ChatMessageWrapper user, string[] args) => BotPawnsHandler.Build();
     }
 
+    public class BotPawnCheckCommand : ChatCommand
+    {
+        public override string Name => "botpawncheck";
+        public override string Description => "AI bot hediff flags + rest vs healer-serum advice (JSON).";
+        public override string Execute(ChatMessageWrapper user, string[] args) => BotPawnCheckHandler.Build(user, args);
+    }
+
     public class BotThreatsCommand : ChatCommand
     {
         public override string Name => "botthreats";
