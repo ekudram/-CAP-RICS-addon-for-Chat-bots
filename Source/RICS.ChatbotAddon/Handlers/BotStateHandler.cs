@@ -16,7 +16,7 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         {
             try
             {
-                Map map = BotMapHelper.GetPlayerMap();
+                Map map = BotMapHelper.GetFocusMap();
                 if (map == null)
                     return BotMapHelper.ErrorNoMapJson();
 
@@ -47,6 +47,8 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                     threatPoints = StorytellerUtility.DefaultThreatPointsNow(map),
                     season = GenDate.Season(absTicks, longLat).ToString(),
                     storyteller = Find.Storyteller?.def?.label ?? "Unknown",
+                    mapUniqueId = map.uniqueID,
+                    maps = BotMapHelper.BuildMapsRoster(),
                     colony = new BotColonyBlock
                     {
                         name = map.Parent?.Label ?? "Unknown Colony",
@@ -133,6 +135,8 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         public float threatPoints;
         public string season;
         public string storyteller;
+        public int mapUniqueId;
+        public List<BotMapRosterEntry> maps;
         public BotColonyBlock colony;
         public BotStatusCount food;
         public BotStatusCount medicine;

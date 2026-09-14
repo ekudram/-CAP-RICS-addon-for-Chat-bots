@@ -151,11 +151,22 @@ namespace CAP_RICS_ChatbotAddon.Handlers
 
         private static BotHediffEntry Classify(Pawn pawn, Hediff h)
         {
+            // Hidden hediffs (bionic leftover "Removed" femur, covered missing parts)
+            // are not on the Health tab — do not send them to the bot.
+            try
+            {
+                if (!h.Visible)
+                    return null;
+            }
+            catch { }
+
             bool isBad = h.def.isBad;
             bool isImplant = h.def.countsAsAddedPartOrImplant
                              || (h.def.addedPartProps != null);
             bool isInjury = h is Hediff_Injury;
             bool isMissing = h is Hediff_MissingPart;
+            if (isMissing && MissingPartReplacedByProsthetic(pawn, h))
+                return null;
             bool isScar = false;
             try
             {
@@ -252,6 +263,61 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                 pain = Math.Round(pain, 3),
                 advice = advice
             };
+        }
+
+        /// <summary>
+        /// True when a missing-part hediff is leftover under a bionic / added part
+        /// (Health tab hides these; Label often "Removed").
+        /// </summary>
+        private static bool MissingPartReplacedByProsthetic(Pawn pawn, Hediff h)
+        {
+            if (!(h is Hediff_MissingPart) || pawn?.health?.hediffSet?.hediffs == null)
+                return false;
+
+            try
+            {
+                if (!h.Bleeding && !h.TendableNow())
+                {
+                    string lab = h.Label ?? h.def?.label ?? "";
+                    if (lab.IndexOf("Removed", StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                }
+            }
+            catch { }
+
+            var missingPart = h.Part;
+            if (missingPart == null)
+                return false;
+
+            foreach (var other in pawn.health.hediffSet.hediffs)
+            {
+                if (other == null || other.def == null)
+                    continue;
+                bool implant = other.def.countsAsAddedPartOrImplant
+                               || other.def.addedPartProps != null
+                               || other is Hediff_AddedPart
+                               || other is Hediff_Implant;
+                if (!implant)
+                    continue;
+                var ip = other.Part;
+                if (ip == null)
+                    continue;
+                if (PartIsOrAncestorOf(ip, missingPart) || PartIsOrAncestorOf(missingPart, ip))
+                    return true;
+            }
+            return false;
+        }
+
+        private static bool PartIsOrAncestorOf(BodyPartRecord ancestor, BodyPartRecord part)
+        {
+            var p = part;
+            while (p != null)
+            {
+                if (p == ancestor)
+                    return true;
+                p = p.parent;
+            }
+            return false;
         }
     }
 

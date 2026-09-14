@@ -3,6 +3,7 @@
 // Licensed under AGPLv3 — see LICENSE.txt
 
 using System;
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
@@ -14,7 +15,7 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         {
             try
             {
-                Map map = BotMapHelper.GetPlayerMap();
+                Map map = BotMapHelper.GetFocusMap();
                 if (map == null)
                     return BotMapHelper.ErrorNoMapJson();
 
@@ -45,8 +46,12 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                     weather = cur?.label ?? "Unknown",
                     weatherDef = cur?.defName,
                     lastWeather = wm?.lastWeather?.label,
+                    uniqueId = map.uniqueID,
                     isPlayerHome = map.IsPlayerHome,
-                    mapCount = Find.Maps?.Count ?? 0
+                    gravship = BotMapHelper.MapWasGravship(map),
+                    isCurrent = Find.CurrentMap != null && map.uniqueID == Find.CurrentMap.uniqueID,
+                    mapCount = Find.Maps?.Count ?? 0,
+                    maps = BotMapHelper.BuildMapsRoster()
                 };
 
                 return BotJson.Serialize(payload);
@@ -74,7 +79,11 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         public string weather;
         public string weatherDef;
         public string lastWeather;
+        public int uniqueId;
         public bool isPlayerHome;
+        public bool gravship;
+        public bool isCurrent;
         public int mapCount;
+        public List<BotMapRosterEntry> maps;
     }
 }

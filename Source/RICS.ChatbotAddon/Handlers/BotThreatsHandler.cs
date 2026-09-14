@@ -30,6 +30,7 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                 int scariaCount = 0;
                 int fireCount = 0;
                 int downedHostileCount = 0;
+                int standingHostileCount = 0;
 
                 try
                 {
@@ -52,10 +53,17 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                             if (!hostileFaction && !manhunter && !scaria)
                                 continue;
 
+                            if (p.Downed)
+                            {
+                                downedHostileCount++;
+                                threats.Add(BuildEntry(p, hostileFaction, manhunter, scaria));
+                                continue;
+                            }
+
+                            standingHostileCount++;
                             if (hostileFaction) hostileFactionCount++;
                             if (manhunter) manhunterCount++;
                             if (scaria) scariaCount++;
-                            if (p.Downed) downedHostileCount++;
 
                             string kindLabel = p.kindDef?.label ?? p.kindDef?.defName ?? p.def?.label ?? "hostile";
                             if (!kindCounts.ContainsKey(kindLabel))
@@ -95,9 +103,11 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                 {
                     status = "ok",
                     command = "botthreats",
-                    threatActive = threats.Count > 0,
+                    // Downed raiders/manhunters are not an active fight — they ended as a threat.
+                    threatActive = standingHostileCount > 0,
                     threatPoints = StorytellerUtility.DefaultThreatPointsNow(map),
-                    hostileCount = threats.Count,
+                    hostileCount = standingHostileCount,
+                    standingHostileCount = standingHostileCount,
                     hostileFactionCount = hostileFactionCount,
                     manhunterCount = manhunterCount,
                     scariaCount = scariaCount,
@@ -227,6 +237,7 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         public bool threatActive;
         public float threatPoints;
         public int hostileCount;
+        public int standingHostileCount;
         public int hostileFactionCount;
         public int manhunterCount;
         public int scariaCount;
