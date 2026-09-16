@@ -62,7 +62,7 @@ namespace CAP_RICS_ChatbotAddon.Commands
     public class BotGearCommand : ChatCommand
     {
         public override string Name => "botgear";
-        public override string Description => "AI bot assigned-pawn full gear / inventory / sidearms (JSON).";
+        public override string Description => "AI bot assigned-pawn full gear / inventory / sidearms plus live weapon combat stats (JSON).";
         public override string Execute(ChatMessageWrapper user, string[] args) => BotGearHandler.Build(user);
     }
 

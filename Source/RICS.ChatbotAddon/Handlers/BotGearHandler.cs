@@ -190,7 +190,7 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         {
             if (!IsWeaponThing(t)) return;
             if (!seen.Add(t.thingIDNumber)) return;
-            weapons.Add(new BotWeaponEntry
+            var entry = new BotWeaponEntry
             {
                 slot = slot,
                 label = t.LabelNoCount ?? t.def?.label,
@@ -199,7 +199,171 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                 quality = TryQuality(t),
                 hpPct = HpPct(t),
                 kind = WeaponKind(t)
-            });
+            };
+            FillWeaponCombatStats(t, entry);
+            weapons.Add(entry);
+        }
+
+        /// <summary>
+        /// Live inspect-card numbers (quality/stuff applied). Null fields are omitted in JSON.
+        /// </summary>
+        private static void FillWeaponCombatStats(Thing t, BotWeaponEntry e)
+        {
+            if (t?.def == null || e == null) return;
+
+            try
+            {
+                float mass = t.GetStatValue(StatDefOf.Mass);
+                if (mass > 0.001f)
+                    e.mass = Math.Round(mass, 3);
+            }
+            catch { /* ignore */ }
+
+            try
+            {
+                var traits = GetWeaponTraits(t);
+                if (traits.Count > 0)
+                    e.traits = traits;
+            }
+            catch { /* ignore */ }
+
+            bool ranged = e.kind == "ranged" || t.def.IsRangedWeapon;
+            bool melee = e.kind == "melee" || t.def.IsMeleeWeapon;
+            if (ranged)
+                FillRangedStats(t, e);
+            if (melee && e.kind != "ranged")
+                FillMeleeStats(t, e);
+        }
+
+        private static void FillRangedStats(Thing t, BotWeaponEntry e)
+        {
+            VerbProperties verb = null;
+            try
+            {
+                verb = t.def.Verbs?.FirstOrDefault(v => v != null && !v.IsMeleeAttack && v.defaultProjectile != null);
+            }
+            catch { /* ignore */ }
+
+            try
+            {
+                var projProps = verb?.defaultProjectile?.projectile;
+                if (projProps != null)
+                {
+                    e.damage = projProps.GetDamageAmount(t);
+                    float ap = projProps.GetArmorPenetration(t);
+                    if (ap > 0.001f)
+                        e.ap = Math.Round(ap, 3);
+                }
+            }
+            catch { /* ignore */ }
+
+            if (verb != null)
+            {
+                try
+                {
+                    if (verb.warmupTime > 0f)
+                        e.warmup = Math.Round(verb.warmupTime, 3);
+                }
+                catch { /* ignore */ }
+
+                try
+                {
+                    if (verb.range > 0f)
+                        e.range = Math.Round(verb.range, 3);
+                }
+                catch { /* ignore */ }
+
+                try
+                {
+                    int burst = verb.burstShotCount;
+                    if (burst > 0)
+                        e.burstCount = burst;
+                    if (burst > 1 && verb.ticksBetweenBurstShots > 0)
+                        e.ticksBetweenBurstShots = verb.ticksBetweenBurstShots;
+                }
+                catch { /* ignore */ }
+            }
+
+            try
+            {
+                float cd = t.GetStatValue(StatDefOf.RangedWeapon_Cooldown);
+                if (cd > 0.001f)
+                    e.cooldown = Math.Round(cd, 3);
+            }
+            catch { /* ignore */ }
+
+            try
+            {
+                float acc = t.GetStatValue(StatDefOf.AccuracyTouch);
+                if (acc > 0.001f)
+                    e.accuracyTouch = Math.Round(acc, 3);
+            }
+            catch { /* ignore */ }
+        }
+
+        private static void FillMeleeStats(Thing t, BotWeaponEntry e)
+        {
+            try
+            {
+                float dps = t.GetStatValue(StatDefOf.MeleeWeapon_AverageDPS);
+                if (dps > 0.001f)
+                    e.meleeDps = Math.Round(dps, 2);
+            }
+            catch { /* ignore */ }
+
+            try
+            {
+                var apDef = DefDatabase<StatDef>.GetNamedSilentFail("MeleeWeapon_AverageArmorPenetration");
+                if (apDef != null)
+                {
+                    float ap = t.GetStatValue(apDef);
+                    if (ap > 0.001f)
+                        e.meleeAp = Math.Round(ap, 3);
+                }
+            }
+            catch { /* ignore */ }
+        }
+
+        private static List<string> GetWeaponTraits(Thing weapon)
+        {
+            var traits = new List<string>();
+            if (weapon == null) return traits;
+
+            try
+            {
+                var uniqueComp = weapon.TryGetComp<CompUniqueWeapon>();
+                var uniqueList = uniqueComp?.TraitsListForReading;
+                if (uniqueList != null)
+                {
+                    foreach (var trait in uniqueList)
+                    {
+                        if (trait == null) continue;
+                        string label = trait.LabelCap;
+                        if (!string.IsNullOrEmpty(label) && !traits.Contains(label))
+                            traits.Add(label);
+                    }
+                }
+            }
+            catch { /* optional DLC/mod */ }
+
+            try
+            {
+                var bladelink = weapon.TryGetComp<CompBladelinkWeapon>();
+                var bladeList = bladelink?.TraitsListForReading;
+                if (bladeList != null)
+                {
+                    foreach (var trait in bladeList)
+                    {
+                        if (trait == null) continue;
+                        string label = trait.LabelCap;
+                        if (!string.IsNullOrEmpty(label) && !traits.Contains(label))
+                            traits.Add(label);
+                    }
+                }
+            }
+            catch { /* optional Royalty */ }
+
+            return traits;
         }
 
         /// <summary>
@@ -366,5 +530,17 @@ namespace CAP_RICS_ChatbotAddon.Handlers
         public string quality;
         public double hpPct;
         public string kind;
+        public int? damage;
+        public double? ap;
+        public double? warmup;
+        public double? cooldown;
+        public double? range;
+        public int? burstCount;
+        public int? ticksBetweenBurstShots;
+        public double? accuracyTouch;
+        public double? meleeDps;
+        public double? meleeAp;
+        public double? mass;
+        public List<string> traits;
     }
 }

@@ -103,7 +103,7 @@
     <label>bot gear</label>
     <enabled>true</enabled>
     <commandClass>CAP_RICS_ChatbotAddon.Commands.BotGearCommand</commandClass>
-    <commandDescription>AI bot only. JSON full loadout of the bot's assigned pawn (equipment, sidearms, all inventory, apparel). Not for viewers.</commandDescription>
+    <commandDescription>AI bot only. JSON full loadout of the bot's assigned pawn (equipment, sidearms, all inventory, apparel) plus live weapon combat stats. Not for viewers.</commandDescription>
     <permissionLevel>moderator</permissionLevel>
     <excludeFromPricelist>true</excludeFromPricelist>
     <cooldownSeconds>0</cooldownSeconds>
