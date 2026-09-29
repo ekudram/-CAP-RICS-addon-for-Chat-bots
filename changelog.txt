@@ -1,0 +1,21 @@
+[CAP] RICS addon for Chat bots
+Steam Workshop changelog
+Newest first. Paste into the Workshop "Change Notes" when you upload.
+
+==========
+1.0.0
+==========
+Optional addon for [CAP] RICS. Load after RICS (release or DEV/Beta).
+
+Moderator-only bot commands (JSON for an AI chatbot, not public chat):
+- !botstate — colony snapshot
+- !botpawns — free colonists
+- !botpawncheck — hediffs / rest vs healer-serum advice
+- !botthreats — hostiles, manhunters, scaria, fires
+- !botmap — map, biome, weather
+- !botwealth — wealth breakdown
+- !botresources — stockpile counts
+- !botgear — assigned pawn loadout and weapon stats
+- !botfaction — faction / Ideology
+- !botowned — RICS-owned gear anywhere
+- !botdisown — unclaim one owned item
