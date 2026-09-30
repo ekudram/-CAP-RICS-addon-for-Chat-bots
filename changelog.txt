@@ -3,6 +3,13 @@ Steam Workshop changelog
 Newest first. Paste into the Workshop "Change Notes" when you upload.
 
 ==========
+1.0.1
+==========
+AI events that happen inside a room now include the room name (letters, toasts, deaths, downed pawns), along with the map data those events already send.
+
+Map ping sends the room under the cursor, or the outdoor area if it is not a room, as a colony event. Default key is F8. Rebind it under Options > Controls > RICS chatbot. If you assign a mouse button, a still click pings and a drag does not, so middle-mouse camera pan can stay as it is.
+
+==========
 1.0.0
 ==========
 Optional addon for [CAP] RICS. Load after RICS (release or DEV/Beta).

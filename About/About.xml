@@ -10,7 +10,7 @@ Licensed under the AGPLv3 License. See LICENSE file in the project root for full
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.0.0</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.0.1</modVersion>
   <description>
     Optional addon for [CAP] Rimworld Interactive Chat Service (RICS).
 
@@ -20,7 +20,10 @@ Licensed under the AGPLv3 License. See LICENSE file in the project root for full
 
     Commands: !botstate, !botpawns, !botthreats, !botmap, !botwealth, !botresources, !botgear (loadout + weapon stats), !botfaction, !botowned, !botdisown
 
-    Requires RICS. Load after RICS.
+    When a letter, toast, death, or downed pawn is inside a room, the AI event includes that room name.
+    Map ping sends the room under the cursor, or the outdoor area, as a colony event. Default key is F8. Change it in Options, Controls, RICS chatbot. A mouse button set there pings on a still click, so middle-mouse camera pan can stay free.
+
+    Requires RICS and Harmony. Load after RICS.
     DEV/Beta packageId: Captolamia.RICS.Beta | Release: Captolamia.RICS
 
     GitHub: https://github.com/ekudram/cap-RICS-Chatbot-Addon
@@ -34,6 +37,7 @@ Licensed under the AGPLv3 License. See LICENSE file in the project root for full
     </li>
   </modDependencies>-->
   <loadAfter>
+    <li>brrainz.harmony</li>
     <li>Captolamia.RICS</li>
     <li>Captolamia.RICS.Beta</li>
   </loadAfter>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!--
+    Shows under Options > Controls. checkForConflicts flags overlap with vanilla groups.
+    A startup pass also adds architect tabs and other mods' categories.
+  -->
+  <KeyBindingCategoryDef>
+    <defName>RICSChatbot</defName>
+    <label>RICS chatbot</label>
+    <description>Controls for the RICS chatbot addon.</description>
+    <checkForConflicts>
+      <li>GameMapCamera</li>
+      <li>Game</li>
+      <li>Development</li>
+      <li>SelectionMisc</li>
+      <li>SelectionSpecial</li>
+      <li>MainTabs</li>
+      <li>Architect</li>
+      <li>Modifiers</li>
+    </checkForConflicts>
+  </KeyBindingCategoryDef>
+
+  <KeyBindingDef>
+    <defName>RICSChatbot_MapPing</defName>
+    <label>map ping</label>
+    <category>RICSChatbot</category>
+    <defaultKeyCodeA>F8</defaultKeyCodeA>
+  </KeyBindingDef>
+
+</Defs>
