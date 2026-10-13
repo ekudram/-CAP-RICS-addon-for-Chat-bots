@@ -2,7 +2,10 @@
 // Copyright (c) Captolamia
 // Licensed under AGPLv3 — see LICENSE.txt
 
-using System.Reflection;
+using CAP_ChatInteractive;
+using CAP_ChatInteractive.AI;
+using CAP_RICS_ChatbotAddon.Harmony;
+using HarmonyLib;
 using Verse;
 
 namespace CAP_RICS_ChatbotAddon
@@ -16,8 +19,18 @@ namespace CAP_RICS_ChatbotAddon
     {
         public ChatbotAddonMod(ModContentPack content) : base(content)
         {
+            // Manual patches. A Harmony attribute stores the RICS assembly name, which contains
+            // brackets, and RimWorld 1.7's type-name parser rejects that string.
             var harmony = new HarmonyLib.Harmony("Captolamia.RICS.ChatbotAddon");
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
+            harmony.Patch(
+                AccessTools.Method(typeof(AIChatBotService), nameof(AIChatBotService.NotifyColonyEvent)),
+                prefix: new HarmonyMethod(typeof(Patch_NotifyColonyEvent_Room), nameof(Patch_NotifyColonyEvent_Room.Prefix)));
+            harmony.Patch(
+                AccessTools.Method(typeof(AIChatBotService), nameof(AIChatBotService.NotifyColonyMessage)),
+                prefix: new HarmonyMethod(typeof(Patch_NotifyColonyMessage_Room), nameof(Patch_NotifyColonyMessage_Room.Prefix)));
+            harmony.Patch(
+                AccessTools.Method(typeof(CAPChatInteractive_GameComponent), nameof(CAPChatInteractive_GameComponent.RecordDeath)),
+                prefix: new HarmonyMethod(typeof(Patch_RecordDeath_Room), nameof(Patch_RecordDeath_Room.Prefix)));
             Log.Message("[RICS Chatbot Addon] Loaded. Bot gamestate commands (!botstate, !botpawns, …) register via RICS. Room names tag AI events. Map ping is Options > Controls > RICS chatbot (default F8).");
         }
     }

@@ -9,12 +9,10 @@ using System;
 using CAP_ChatInteractive;
 using CAP_ChatInteractive.AI;
 using CAP_RICS_ChatbotAddon.Handlers;
-using HarmonyLib;
 using Verse;
 
 namespace CAP_RICS_ChatbotAddon.Harmony
 {
-    [HarmonyPatch(typeof(AIChatBotService), nameof(AIChatBotService.NotifyColonyEvent))]
     public static class Patch_NotifyColonyEvent_Room
     {
         public static void Prefix(ref string message, AiMapLocation location)
@@ -30,7 +28,6 @@ namespace CAP_RICS_ChatbotAddon.Harmony
         }
     }
 
-    [HarmonyPatch(typeof(AIChatBotService), nameof(AIChatBotService.NotifyColonyMessage))]
     public static class Patch_NotifyColonyMessage_Room
     {
         public static void Prefix(ref string addressedMessage, ref string rawText, AiMapLocation location)
@@ -47,7 +44,6 @@ namespace CAP_RICS_ChatbotAddon.Harmony
         }
     }
 
-    [HarmonyPatch(typeof(CAPChatInteractive_GameComponent), nameof(CAPChatInteractive_GameComponent.RecordDeath))]
     public static class Patch_RecordDeath_Room
     {
         public static void Prefix(ref string deathMessage, AiMapLocation location)

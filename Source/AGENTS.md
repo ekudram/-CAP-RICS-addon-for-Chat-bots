@@ -44,6 +44,6 @@ Keyed XML is not `string.Format`. `{0}` only — never `{0:N0}`. Keys under `1.6
 ## Code
 
 - Prefer RICS types already referenced (`ChatCommand`, `ChatMessageWrapper`). Do not duplicate RICS command registration.
-- Harmony is not required in this addon unless a future patch needs it.
+- Harmony patches that target RICS types are registered in `ChatbotAddonMod`. Do not put those types in a `[HarmonyPatch]` attribute. The RICS assembly name contains brackets, and RimWorld 1.7 rejects that string.
 - Read vanilla 1.6 at `...\RimWorld\Source\RIMWORLD 1.6\Assembly-CSharp\` when checking pawn/map/wealth APIs.
 - Null-check; do not crash the game.
