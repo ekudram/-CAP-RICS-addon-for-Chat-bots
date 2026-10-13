@@ -22,3 +22,8 @@ appsettings.*.local.json
 1.6/Assemblies/[CAP] Chat Interactive.dll
 1.6/Assemblies/*.dll.config
 1.6/Assemblies/*.pdb
+1.7/Assemblies/0Harmony.dll
+1.7/Assemblies/Newtonsoft.Json.dll
+1.7/Assemblies/[CAP] Chat Interactive.dll
+1.7/Assemblies/*.dll.config
+1.7/Assemblies/*.pdb

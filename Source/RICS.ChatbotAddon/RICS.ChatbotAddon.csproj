@@ -8,7 +8,7 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\..\1.6\Assemblies\</OutputPath>
+    <OutputPath>..\..\1.7\Assemblies\</OutputPath>
     <DebugType>portable</DebugType>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
@@ -22,12 +22,12 @@
   <!-- RICS + Newtonsoft from DEV mod (provided at runtime by RICS; do not copy). -->
   <ItemGroup>
     <Reference Include="CAP_Chat_Interactive">
-      <HintPath>..\..\..\[CAP] Chat Interactive\1.6\Assemblies\[CAP] Chat Interactive.dll</HintPath>
+      <HintPath>..\..\..\[CAP] Chat Interactive\1.7\Assemblies\[CAP] Chat Interactive.dll</HintPath>
       <Private>false</Private>
       <SpecificVersion>false</SpecificVersion>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\[CAP] Chat Interactive\1.6\Assemblies\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\[CAP] Chat Interactive\1.7\Assemblies\Newtonsoft.Json.dll</HintPath>
       <Private>false</Private>
       <SpecificVersion>false</SpecificVersion>
     </Reference>
@@ -57,6 +57,20 @@
       <_ExtraConfigs Include="$(OutputPath)*.dll.config" />
     </ItemGroup>
     <Delete Files="@(_ExtraDlls);@(_ExtraConfigs)" ContinueOnError="true" />
+  </Target>
+
+  <!-- 1.7 load folder needs the same Defs and languages. RICS still supplies shared DLLs. -->
+  <Target Name="CopyVersionContent" AfterTargets="PostBuildCleanup">
+    <ItemGroup>
+      <AddonDefs Include="$(MSBuildProjectDirectory)\..\..\1.6\Defs\**\*.*" />
+      <AddonLang Include="$(MSBuildProjectDirectory)\..\..\1.6\Languages\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AddonDefs)"
+          DestinationFiles="@(AddonDefs->'$(MSBuildProjectDirectory)\..\..\1.7\Defs\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(AddonLang)"
+          DestinationFiles="@(AddonLang->'$(MSBuildProjectDirectory)\..\..\1.7\Languages\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
   </Target>
 
 </Project>
