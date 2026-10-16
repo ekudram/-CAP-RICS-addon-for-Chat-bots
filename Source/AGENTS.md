@@ -1,4 +1,4 @@
-# RICS Chatbot Addon — Grok Build notes (RimWorld 1.6)
+# RICS Chatbot Addon — Grok Build notes (RimWorld 1.7 branch)
 
 Optional **RICS addon** (`Captolamia.RICS.ChatbotAddon`). Not the main RICS tree (`[CAP] Chat Interactive`). Do not edit RICS core from this folder.
 
@@ -9,13 +9,13 @@ Moderator-only commands return **JSON gamestate** for an external AI bot (Masie)
 - Mod root: `Mods\[CAP] RICS addon for Chat bots\`
 - Namespace / assembly: `CAP_RICS_ChatbotAddon`
 - GitHub: `ekudram/cap-RICS-Chatbot-Addon`
-- DLL: `1.6/Assemblies/CAP_RICS_ChatbotAddon.dll`
+- DLL: `1.7/Assemblies/CAP_RICS_ChatbotAddon.dll` (this branch). `1.6` branch still writes `1.6/Assemblies/`.
 - Load **after** `Captolamia.RICS` or `Captolamia.RICS.Beta`
 - HintPath compiles against DEV RICS DLL. **Private=false** — do not copy Harmony, Newtonsoft, or RICS into this addon’s Assemblies (PostBuild deletes extras).
 
 ## Version (ask first)
 
-**Current work: 1.0.0.** There is **no** `VersionHistory.cs`.
+**Current work: 1.0.2.** There is **no** `VersionHistory.cs`.
 
 | File | Role |
 |------|------|
