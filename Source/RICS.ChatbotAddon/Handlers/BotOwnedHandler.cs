@@ -75,7 +75,7 @@ namespace CAP_RICS_ChatbotAddon.Handlers
                 label = t.LabelNoCount ?? t.def?.label,
                 defName = t.def?.defName,
                 stuff = t.Stuff?.label ?? t.Stuff?.defName,
-                quality = QualityOf(t) ?? (item.QualityLabel == "-" ? null : item.QualityLabel),
+                quality = QualityOf(t) ?? PlainQuality(item.QualityLabel),
                 hpPct = HpPct(t),
                 kind = item.IsWeapon ? "weapon" : (item.IsApparel ? "apparel" : "item"),
                 where = item.Where ?? "Unknown"
@@ -97,10 +97,21 @@ namespace CAP_RICS_ChatbotAddon.Handlers
             {
                 var cq = t.TryGetComp<CompQuality>();
                 if (cq != null)
-                    return cq.Quality.GetLabel();
+                    return PlainQuality(cq.Quality.GetLabel());
             }
             catch { /* ignore */ }
             return null;
+        }
+
+        // GetLabel can include color tags from a quality-color mod. JSON keeps the word only.
+        internal static string PlainQuality(string raw)
+        {
+            if (string.IsNullOrEmpty(raw) || raw == "-")
+                return null;
+            string plain = raw.StripTags();
+            if (string.IsNullOrWhiteSpace(plain) || plain == "-")
+                return null;
+            return plain.Trim();
         }
 
         internal static double HpPct(Thing t)

@@ -19,7 +19,7 @@ namespace CAP_RICS_ChatbotAddon.Harmony
         {
             try
             {
-                message = BotRoomHelper.AppendRoom(message, location);
+                message = BotJson.WithoutColor(BotRoomHelper.AppendRoom(message, location));
             }
             catch (Exception ex)
             {
@@ -34,8 +34,8 @@ namespace CAP_RICS_ChatbotAddon.Harmony
         {
             try
             {
-                addressedMessage = BotRoomHelper.AppendRoom(addressedMessage, location);
-                rawText = BotRoomHelper.AppendRoom(rawText, location);
+                addressedMessage = BotJson.WithoutColor(BotRoomHelper.AppendRoom(addressedMessage, location));
+                rawText = BotJson.WithoutColor(BotRoomHelper.AppendRoom(rawText, location));
             }
             catch (Exception ex)
             {
@@ -50,7 +50,7 @@ namespace CAP_RICS_ChatbotAddon.Harmony
         {
             try
             {
-                deathMessage = BotRoomHelper.AppendRoom(deathMessage, location);
+                deathMessage = BotJson.WithoutColor(BotRoomHelper.AppendRoom(deathMessage, location));
             }
             catch (Exception ex)
             {

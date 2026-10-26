@@ -9,6 +9,10 @@ Pre-Release
 
 Loads on RimWorld 1.7. Room names on AI events and the map ping are unchanged.
 
+The colonist list now says how hungry, tired, and in need of fun each person is, plus bleeding, infection, malnutrition, and whether they are in bed.
+
+Bot replies leave out color codes. Quality is still the word, such as good or normal.
+
 ==========
 1.0.1
 ==========
