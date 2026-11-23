@@ -13,6 +13,8 @@ The colonist list now says how hungry, tired, and in need of fun each person is,
 
 Bot replies leave out color codes. Quality is still the word, such as good or normal.
 
+New moderator command !botmechs. It reports the mechanitor's bandwidth, control groups, mechs on hand, and which mech types are unlocked.
+
 ==========
 1.0.1
 ==========

@@ -111,6 +111,19 @@
   </CAP_ChatInteractive.ChatCommandDef>
 
   <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotMechs</defName>
+    <commandText>botmechs</commandText>
+    <label>bot mechs</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotMechsCommand</commandClass>
+    <commandDescription>AI bot only. JSON mech roster, bandwidth, and unlocked mech types. Not for viewers.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
     <defName>BotFaction</defName>
     <commandText>botfaction</commandText>
     <label>bot faction</label>
