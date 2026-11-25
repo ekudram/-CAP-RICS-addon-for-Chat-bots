@@ -27,3 +27,4 @@ appsettings.*.local.json
 1.7/Assemblies/[CAP] Chat Interactive.dll
 1.7/Assemblies/*.dll.config
 1.7/Assemblies/*.pdb
+/About/PublishedFileId.txt
