@@ -66,6 +66,13 @@ namespace CAP_RICS_ChatbotAddon.Commands
         public override string Execute(ChatMessageWrapper user, string[] args) => BotGearHandler.Build(user);
     }
 
+    public class BotMechsCommand : ChatCommand
+    {
+        public override string Name => "botmechs";
+        public override string Description => "AI bot assigned-pawn mech roster, bandwidth, and unlocked mech types (JSON).";
+        public override string Execute(ChatMessageWrapper user, string[] args) => BotMechsHandler.Build(user);
+    }
+
     public class BotSleepCommand : ChatCommand
     {
         public override string Name => "botsleep";

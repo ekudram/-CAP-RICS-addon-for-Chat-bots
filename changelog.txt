@@ -9,6 +9,8 @@ Pre-Release
 
 New moderator commands !botsleep and !botrecreate. The bot can send her pawn to bed or to relax, or check first without starting the job. Both commands are in the RimWorld 1.6 and 1.7 load folders.
 
+New moderator command !botmechs. It reports the mechanitor's bandwidth, control groups, mechs on hand, and which mech types are unlocked.
+
 ==========
 1.0.2
 ==========
