@@ -111,6 +111,32 @@
   </CAP_ChatInteractive.ChatCommandDef>
 
   <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotSleep</defName>
+    <commandText>botsleep</commandText>
+    <label>bot sleep</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotSleepCommand</commandClass>
+    <commandDescription>AI bot only. Not for viewers.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
+    <defName>BotRecreate</defName>
+    <commandText>botrecreate</commandText>
+    <label>bot recreate</label>
+    <enabled>true</enabled>
+    <commandClass>CAP_RICS_ChatbotAddon.Commands.BotRecreateCommand</commandClass>
+    <commandDescription>AI bot only. Not for viewers.</commandDescription>
+    <permissionLevel>moderator</permissionLevel>
+    <excludeFromPricelist>true</excludeFromPricelist>
+    <cooldownSeconds>0</cooldownSeconds>
+    <useCommandCooldown>false</useCommandCooldown>
+  </CAP_ChatInteractive.ChatCommandDef>
+
+  <CAP_ChatInteractive.ChatCommandDef>
     <defName>BotFaction</defName>
     <commandText>botfaction</commandText>
     <label>bot faction</label>

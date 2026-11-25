@@ -29,7 +29,7 @@ Ask before bumping. Same version → append both history files. New version → 
 
 Defs: `1.6/Defs/Commands/BotCommands.xml`. Classes: `Commands/BotCommands.cs` + `Handlers/`. `permissionLevel` moderator, `excludeFromPricelist` true.
 
-`!botstate` `!botpawns` `!botpawncheck` `!botthreats` `!botmap` `!botwealth` `!botresources` `!botgear` `!botfaction` `!botowned` `!botdisown`
+`!botstate` `!botpawns` `!botpawncheck` `!botthreats` `!botmap` `!botwealth` `!botresources` `!botgear` `!botsleep` `!botrecreate` `!botfaction` `!botowned` `!botdisown`
 
 JSON via `BotJson.Serialize` only — **no `dynamic`**. Changing JSON fields or command names needs a **rics-handoff** for Masie.
 

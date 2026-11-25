@@ -13,6 +13,8 @@ The colonist list now says how hungry, tired, and in need of fun each person is,
 
 Bot replies leave out color codes. Quality is still the word, such as good or normal.
 
+New moderator commands !botsleep and !botrecreate. The bot can send her pawn to bed or to relax, or check first without starting the job.
+
 ==========
 1.0.1
 ==========
