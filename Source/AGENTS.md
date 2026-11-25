@@ -15,7 +15,7 @@ Moderator-only commands return **JSON gamestate** for an external AI bot (Masie)
 
 ## Version (ask first)
 
-**Current work: 1.0.2.** There is **no** `VersionHistory.cs`.
+**Current work: 1.0.3.** There is **no** `VersionHistory.cs`.
 
 | File | Role |
 |------|------|
