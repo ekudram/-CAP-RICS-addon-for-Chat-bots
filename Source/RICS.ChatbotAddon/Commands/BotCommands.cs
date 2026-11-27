@@ -73,6 +73,20 @@ namespace CAP_RICS_ChatbotAddon.Commands
         public override string Execute(ChatMessageWrapper user, string[] args) => BotMechsHandler.Build(user);
     }
 
+    public class BotMechGroupCommand : ChatCommand
+    {
+        public override string Name => "botmechgroup";
+        public override string Description => "AI bot only. Not for viewers.";
+        public override string Execute(ChatMessageWrapper user, string[] args) => BotMechGroupHandler.Build(user, args);
+    }
+
+    public class BotMechRemoveCommand : ChatCommand
+    {
+        public override string Name => "botmechremove";
+        public override string Description => "AI bot only. Not for viewers.";
+        public override string Execute(ChatMessageWrapper user, string[] args) => BotMechRemoveHandler.Build(user, args);
+    }
+
     public class BotSleepCommand : ChatCommand
     {
         public override string Name => "botsleep";

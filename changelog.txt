@@ -3,6 +3,17 @@ Steam Workshop changelog
 Newest first. Paste into the Workshop "Change Notes" when you upload.
 
 ==========
+1.0.4
+==========
+Pre-Release
+
+New moderator commands !botmechgroup and !botmechremove. The bot can move her mechs of one kind into a control group, and optionally set their allowed area. She can check the groups first. She can also scrap extra light work mechs of one kind. She will not go below 5 of that kind unless she gives a different target. Combat mechs, war queens, and centurions are left alone.
+
+Scrapping uses the game's disassemble result right away. The materials from taking a mech apart are dropped, the mech is killed with no death notice, and the corpse is removed. She is not sent walking over for the long disassemble job.
+
+Both commands are in the RimWorld 1.6 and 1.7 load folders.
+
+==========
 1.0.3
 ==========
 Pre-Release

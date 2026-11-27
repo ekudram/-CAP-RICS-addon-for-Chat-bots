@@ -11,7 +11,7 @@ Licensed under the AGPLv3 License. See LICENSE file in the project root for full
     <li>1.6</li>
     <li>1.7</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.0.3</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.0.4</modVersion>
   <description>
     Optional addon for [CAP] Rimworld Interactive Chat Service (RICS).
 
@@ -19,7 +19,7 @@ Licensed under the AGPLv3 License. See LICENSE file in the project root for full
     for an external AI chatbot (e.g. Masie). Responses are intended for the RICS
     AI command path (file/HTTP) — not for public viewer chat.
 
-    Commands: !botstate, !botpawns, !botthreats, !botmap, !botwealth, !botresources, !botgear (loadout + weapon stats), !botmechs, !botsleep, !botrecreate, !botfaction, !botowned, !botdisown
+    Commands: !botstate, !botpawns, !botthreats, !botmap, !botwealth, !botresources, !botgear (loadout + weapon stats), !botmechs, !botmechgroup, !botmechremove, !botsleep, !botrecreate, !botfaction, !botowned, !botdisown
 
     When a letter, toast, death, or downed pawn is inside a room, the AI event includes that room name.
     Map ping sends the room under the cursor, or the outdoor area, as a colony event. Default key is F8. Change it in Options, Controls, RICS chatbot. A mouse button set there pings on a still click, so middle-mouse camera pan can stay free.
