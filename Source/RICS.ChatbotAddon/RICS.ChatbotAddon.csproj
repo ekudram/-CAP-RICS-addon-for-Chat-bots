@@ -59,7 +59,7 @@
     <Delete Files="@(_ExtraDlls);@(_ExtraConfigs)" ContinueOnError="true" />
   </Target>
 
-  <!-- 1.7 load folder needs the same Defs and languages. RICS still supplies shared DLLs. -->
+  <!-- 1.7 load folder needs the same Defs, languages, and addon DLL. RICS still supplies shared DLLs. -->
   <Target Name="CopyVersionContent" AfterTargets="PostBuildCleanup">
     <ItemGroup>
       <AddonDefs Include="$(MSBuildProjectDirectory)\..\..\1.6\Defs\**\*.*" />
@@ -71,6 +71,8 @@
     <Copy SourceFiles="@(AddonLang)"
           DestinationFiles="@(AddonLang->'$(MSBuildProjectDirectory)\..\..\1.7\Languages\%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(OutputPath)CAP_RICS_ChatbotAddon.dll" DestinationFolder="$(MSBuildProjectDirectory)\..\..\1.6\Assemblies\" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(OutputPath)CAP_RICS_ChatbotAddon.pdb" DestinationFolder="$(MSBuildProjectDirectory)\..\..\1.6\Assemblies\" SkipUnchangedFiles="true" Condition="Exists('$(OutputPath)CAP_RICS_ChatbotAddon.pdb')" />
   </Target>
 
 </Project>

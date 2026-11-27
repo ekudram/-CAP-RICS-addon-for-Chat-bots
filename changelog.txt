@@ -11,6 +11,8 @@ New moderator commands !botsleep and !botrecreate. The bot can send her pawn to 
 
 New moderator command !botmechs. It reports the mechanitor's bandwidth, control groups, mechs on hand, and which mech types are unlocked.
 
+RimWorld 1.6 and 1.7 load the same bot commands.
+
 ==========
 1.0.2
 ==========
